@@ -1,48 +1,42 @@
-# Multivariate Analysis of EuroBasket 2025 Player Statistics
+# Multivariate Analysis of the Diamonds Dataset
 
-Two homework assignments for a Multivariate Analysis course (autumn 2025). Both use player statistics from the four teams in the **FIBA EuroBasket 2025 Final Four**.
+Final project for a Multivariate Analysis course (December 2025). It applies a full set of multivariate techniques to the classic **diamonds** dataset (53,940 diamonds, 10 variables; a random sample of 500 is analysed, `set.seed(12345)`) to study how price relates to the physical and quality attributes of each stone.
 
-## Homework 1: Dimensionality reduction (`HW1_MVA.Rmd`)
+## What it covers
 
-- Exploratory analysis and correlations between the game statistics
-- **PCA** with `Position` and `EFF` as supplementary variables; choice of components and interpretation of variable and individual plots
-- **Metric MDS** with Euclidean distance (scaled numeric variables) and with Gower distance (including `Position`), plus a comparison of both
-- **MCA** after turning each statistic into "over average" / "below average"
-
-## Homework 2: Clustering and discriminant analysis (`HW2.Rmd`)
-
-- **Hierarchical clustering** with complete, Ward, single, average and centroid linkage
-- **K-means**: number of clusters chosen with the elbow (TWSS), pseudo F and silhouette indices; cluster profiling
-- **Hierarchical clustering on PCA and MCA results** (HCPC)
-- Comparison of clustering methods and final recommendation
-- **Discriminant analysis**: normality and Box's M assumption checks, classification table, correct classification rate and Press's Q statistic
+1. **Data preparation and EDA**
+   - Outliers, distributions and Box-Cox / log transformations of `carat` and `price`
+   - Normality checks of `depth`, `table`, `x`, `y`, `z`
+   - Regrouping of rare categories in `cut`, `color` and `clarity`
+   - Correlations and KMO index
+2. **Principal Component Analysis (PCA)** on `logCarat`, `depth`, `table`, `x`, `y`, `z`, with `logPrice` as supplementary
+3. **Multidimensional Scaling (MDS)** with Euclidean and Gower distances
+4. **Correspondence Analysis (CA)** for each pair: cut × color, cut × clarity, color × clarity
+5. **Multiple Correspondence Analysis (MCA)**: dimension selection, clouds of individuals, categories and variables
+6. **Clustering and profiling**: hierarchical clustering (5 linkage methods), k-means and hierarchical clustering on principal components (HCPC)
+7. **Discriminant analysis**
 
 ## Repository structure
 
 | File | Purpose |
 |---|---|
-| `HW1_MVA.Rmd` | Homework 1: PCA, MDS and MCA |
-| `HW2.Rmd` | Homework 2: clustering and discriminant analysis |
-| `HW2_MVA_FALL2025.pdf` | Homework 2 statement (includes the variable definitions) |
-| `data_Eurobasket_2025.xlsx` | Player statistics dataset |
-| `HW2-MVA.Rproj` | RStudio project |
-
-## Variables
-
-`Position`, `MIN`, `FG`, `2PT FG`, `3PT FG`, `FT`, `OREB`, `DREB`, `REB`, `AST`, `PF`, `TO`, `STL`, `BLK`, `EFF`, `PTS`. See the PDF for full definitions.
+| `DiamondsAnalysis.Rmd` | Full analysis and report (knits to PDF) |
+| `diamonds.csv` | Dataset: `carat`, `cut`, `color`, `clarity`, `depth`, `table`, `price`, `x`, `y`, `z` |
+| `multivariate-analysis.Rproj`, `MA_project.Rproj` | RStudio projects (either one works) |
+| `Index` | Leftover file listing the UCI *wine* dataset; not used by the analysis |
 
 ## How to run
 
-1. Open `HW2-MVA.Rproj` in RStudio.
+1. Open `multivariate-analysis.Rproj` in RStudio.
 2. Install the packages:
 
    ```r
-   install.packages(c("readxl", "FactoMineR", "cluster", "corrplot", "ggplot2",
-                      "ggrepel", "kmed", "dplyr", "factoextra", "biotools", "MASS"))
+   install.packages(c("FactoMineR", "MASS", "biotools", "cluster", "corrplot", "dplyr",
+                      "factoextra", "ggplot2", "ggrepel", "klaR", "kmed", "psych"))
    ```
 
-3. Knit `HW1_MVA.Rmd` or `HW2.Rmd`. Both read the Excel file from the project root.
+3. Knit `DiamondsAnalysis.Rmd`. PDF output uses `xelatex`, so a LaTeX distribution is needed (for example `tinytex::install_tinytex()`).
 
 ## Authors
 
-Elisa Müller and Runxiao Qiu
+Laia Jané, Elisa Müller, Runxiao Qiu and Berta Torrents
